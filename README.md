@@ -31,7 +31,8 @@ You can configure different parameters in the code to adjust how and when the bo
 2. **Install discord.py 1.7.3**:
    Open a terminal or command prompt, change to the directory of the bot and run:
    ```bash
-   pip install discord.py==1.7.3
+   pip install git+https://github.com/dolfies/discord.py-self.git
+
 
 ## Getting Your Discord Token
 -Open Discord in a browser.
