@@ -33,7 +33,7 @@ You can configure different parameters in the code to adjust how and when the bo
    ```bash
    pip install discord.py==1.7.3
 
-##Getting Your Discord Token
+## Getting Your Discord Token
 -Open Discord in a browser.
 -Press F12 or Ctrl+Shift+I to open Developer Tools.
 -Go to the Application tab.
@@ -48,7 +48,7 @@ Warning: Never share your Discord token with anyone.
 -Right-click on the channel where Mudae interacts (you must have Developer Mode enabled in Discord to see this option).
 Click on Copy Channel ID.
 
-##Configuration
+## Configuration
 You can configure the following variables in the bot.py script:
 
 token: Your Discord token.
