@@ -43,7 +43,7 @@ You can configure different parameters in the code to adjust how and when the bo
 
 Warning: Never share your Discord token with anyone.
 
-##Find the Channel ID:
+## Find the Channel ID:
 
 -Right-click on the channel where Mudae interacts (you must have Developer Mode enabled in Discord to see this option).
 Click on Copy Channel ID.
