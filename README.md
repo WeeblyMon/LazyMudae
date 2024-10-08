@@ -18,20 +18,20 @@ You can configure different parameters in the code to adjust how and when the bo
 
 ## Requirements
 
-- **Discord** installed.
-- **Python 3.7+** installed.
-- **discord.py v1.7.3** (this specific version) installed. Newer versions of `discord.py` will not work as they do not support selfbots.
+- **Python** installed.
+- **discord.py-self** (this specific version) installed. Newer versions of `discord.py` will not work as they do not support selfbots.
 - Python IDLE, VSCode, Notepad++ - Whatever you have to edit code. 
 
 ## Installation & Setup
 
-1. **Install Python 3.7+**:
-   Download and install Python from the official site: [https://www.python.org/downloads/](https://www.python.org/downloads/)
+1. **Install Python**:
+   Download and install latest Python from the official site: [https://www.python.org/downloads/](https://www.python.org/downloads/)
 
-2. **Install discord.py 1.7.3**:
+2. **Install discord.py-self from their github.**:
    Open a terminal or command prompt, change to the directory of the bot and run:
    ```bash
-   pip install discord.py==1.7.3
+   pip install git+https://github.com/dolfies/discord.py-self.git
+
 
 ## Getting Your Discord Token
 -Open Discord in a browser.

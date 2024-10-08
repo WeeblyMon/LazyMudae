@@ -3,25 +3,37 @@ from discord.ext import commands
 import re
 import asyncio
 
-# Insert discord token here
-token = ""
-CHANNEL_ID =   # right-click over the channel that has mudae, "Copy Channel ID"
+token = "" # Insert discord token here
+CHANNEL_ID = ""  # right-click over the channel that has mudae, "Copy Channel ID"
 desiredKakera = 300  # auto claim threshold, change as needed
 always_click_emojis = ['kakeraY', 'kakeraO', 'kakeraR', 'kakeraW', 'kakeraL']  # will click on kakeraYellow and onwards
 claim_emojis = ['💖', '💗', '💘', '❤️', '💓', '💕', '♥️']  # add emojis here if server uses custom claim emojis
 kakera_react_ready = False  # leave this
-tu_interval = 2 * 60 * 60  # this is set to 2 hours by default
-username = ""  # set this to your username or any other username you'd like to track
+tu_interval = 7200  # this is set to 2 hours by default
+username = "test"  # set this to your username or any other username you'd like to track
+channel = None
+client = commands.Bot(command_prefix="!")
 
-client = commands.Bot(command_prefix="!", self_bot=True)
+#its better to use config.json or something similar. made it into string first so users find it easier to edit.
+CHANNEL_ID = int(CHANNEL_ID)
 
 @client.event
 async def on_ready():
+    global channel
     print("Selfbot is ready to be used.")
     print(f"Logged in as {client.user.name}")
     print("Command Prefix is !")
-    client.loop.create_task(repeat_tu())
+    #this way channel is not created each time repeat_tu is send
+    try:
+        channel = client.get_channel(CHANNEL_ID)
+        if channel is None:
+            raise Exception(f"Channel with ID {CHANNEL_ID} not found.")
+        asyncio.create_task(repeat_tu())
+    except Exception as e:
+        print(f"Failed to retrieve channel with id {CHANNEL_ID}\nError: {e}")
 
+"""
+not needed:-
 async def click_reaction_button(message, button):
     if button.custom_id:
         payload = {
@@ -43,7 +55,7 @@ async def click_reaction_button(message, button):
             ),
             json=payload
         )
-        print(f"Clicked the button with emoji: {button.emoji.name if button.emoji else 'No Emoji'}")
+        print(f"Clicked the button with emoji: {button.emoji.name if button.emoji else 'No Emoji'}")"""
 
 async def roll_n_times(channel, rolls):
     print(f"Starting {rolls} roll(s)...")
@@ -53,11 +65,13 @@ async def roll_n_times(channel, rolls):
         await asyncio.sleep(1)
 
 async def repeat_tu():
+    global channel, tu_interval
     while True:
-        channel = client.get_channel(CHANNEL_ID)
         if channel:
             await channel.send("$tu")
-            print(f"Sent $tu in channel: {channel.id}")
+            print(f"Sent $tu in channel: {channel.name}")
+        else:
+            print("Channel not found.")
         await asyncio.sleep(tu_interval)
 
 async def retry_dk(channel, retries=5, delay=5):
@@ -88,7 +102,6 @@ async def on_message(message):
             kakera_react_ready = False
             print("Kakera reactions are no longer available.")
 
-        # Check if the message contains the username you specified and claims are available
         if username in message.content and "you __can__ claim right now" in message.content:
             rolls_match = re.search(r"You have \*\*(\d+)\*\* rolls left", message.content)
             if rolls_match:
@@ -132,11 +145,11 @@ async def on_message(message):
                     if button.emoji and button.emoji.name in claim_emojis:
                         if kakera_amount >= desiredKakera:
                             print(f"Claim Button (Heart Emoji) Found with Kakera Amount: {kakera_amount}. Clicking...")
-                            await click_reaction_button(message, button)
+                            await button.click()
 
                     if button.emoji and button.emoji.name in always_click_emojis:
                         print(f"Kakera Button Found: {button.emoji.name}. Clicking...")
-                        await click_reaction_button(message, button)
+                        await button.click()
 
     await client.process_commands(message)
 
