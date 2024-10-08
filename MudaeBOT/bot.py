@@ -122,7 +122,7 @@ async def on_message(message):
         if "$dk is ready" in message.content:
             print("$dk is ready! Claiming $dk...")
             channel = client.get_channel(CHANNEL_ID)
-            await retry_dk(channel)
+            #await retry_dk(channel)
 
         if message.embeds:
             for embed in message.embeds:
